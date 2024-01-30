@@ -1,0 +1,120 @@
+
+------------------------------------------------------------------- Test 1 -----------------------------------------------------------
+
+/// <reference types="cypress"/>
+
+// Describe block for Greenkart test cases
+describe('Greenkart', () => {
+
+  // Test case
+  it('Test cases', () => {
+
+- Theit` block represents an individual test case. The label 'Test cases' describes what this test is checking.
+
+    // Set viewport size
+    cy.viewport(1920, 1080);
+
+-cy.viewport(1920, 1080)`: Sets the viewport size to 1920x1080 pixels. This defines the size of the browser window for the test.
+
+    // Visit Greenkart website
+    cy.visit('https://rahulshettyacademy.com/seleniumPractise/#/');
+
+-cy.visit('https://rahulshettyacademy.com/seleniumPractise#/')`: Navigates to the specified URL, which is the Greenkart website.
+
+    // Click on the search button and search for "ca"
+    cy.get('.search-keyword').click().type("ca");
+
+-cy.get('.search-keyword').click().type("ca")`: Finds the HTML element with the class 'search-keyword', clicks on it, and types "ca". This simulates searching for products with the keyword "ca".
+
+    // Check the number of visible products with class 'product'
+    cy.get('.product:visible').should("have.length", 4);
+
+-cy.get('.product:visible').should("have.length", 4)`: Verifies that there are four visible products with the class 'product' on the page.
+
+    cy.get(".products").as("productElement");
+
+-cy.get(".products").as("productElement")`: Aliases the ".products" class as "productElement". This alias can be used later to refer to the same set of elements.
+
+    // Check the number of products within the 'products' class
+    cy.get("@productElement").find(".product").should("have.length", 4);
+
+-cy.get("@productElement").find(".product").should("have.length", 4)`: Verifies that there are four products within the element aliased as "productElement".
+
+    // Click on "ADD TO CART" button for the second product
+    cy.get("@productElement").find(".product").eq(1).contains("ADD TO CART").click();
+
+-cy.get("@productElement").find(".product").eq(1).contains("ADD TO CART").click()`: Finds the second product within the aliased element, locates the "ADD TO CART" button, and clicks on it.
+
+    // Loop through each product and perform actions based on product name
+    cy.get("@productElement").find(".product").each(($e1, index, $list) => {
+
+-cy.get("@productElement").find(".product").each(($e1, index, $list) => {...}`: Iterates over each product found within the aliased element.
+
+      // Get the text content of the product name
+      const h4value = $e1.find("h4.product-name").text();
+
+-const h4value = $e1.find("h4.product-name").text()`: Retrieves the text content of the product name (h4 element with class "product-name").
+
+      // Check if the product name includes "Cashews"
+      if (h4value.includes("Cashews")) {
+
+-if (h4value.includes("Cashews")) {...}`: Checks if the product name includes the string "Cashews".
+
+        // Click on the button within the current product
+        cy.wrap($e1).find("button").click();
+
+-cy.wrap($e1).find("button").click()`: If the product name includes "Cashews", wraps the current product element and clicks the button within it.
+
+        // Log a message indicating that the element is found
+        cy.log("element found");
+      } else {
+
+-cy.log("element found")`: Logs a message indicating that the element is found.
+        // Log a message indicating that the element is not found
+        cy.log("element not found");
+      }
+    });
+-cy.log("element not found")`: Logs a message indicating that the element is not found. This block is executed if the product name does not include "Cashews".
+    cy.get(".brand").then((logoElement)=>{
+      cy.log((logoElement).text())
+    })
+-cy.get(".brand").then((logoElement) => {...}`: Uses thethen` command to work with the result of the previous command (getting the ".brand" element).
+      cy.log((logoElement).text())
+    })
+-cy.log((logoElement).text())`: Logs the text content of the ".brand" element.
+    cy.get(".brand").should("have.text","GREENKART");
+-cy.get(".brand").should("have.text","GREENKART")`: Asserts that the text content of the ".brand" element is "GREENKART".
+    // Clicking on the back to proceed to checkout
+    cy.get('.cart-icon > img').click();
+-cy.get('.cart-icon > img').click()`: Finds the element with class 'cart-icon' and clicks on its child image. This simulates going back in the checkout process.
+    // Clicking on the proceed to checkout button
+    cy.contains("PROCEED TO CHECKOUT").click();
+-cy.contains("PROCEED TO CHECKOUT").click()`: Finds the element containing the text "PROCEED TO CHECKOUT" and clicks on it.
+    // Clicking on the place order button
+    cy.contains("Place Order").click();
+-cy.contains("Place Order").click()`: Finds the element containing the text "Place Order" and clicks on it.
+
+------------------------------------------------------------------- Test 2 -----------------------------------------------------------
+
+1. Test Setup (`beforeEach` block):
+   -cy.viewport(1920, 1080)`: Sets the viewport size to 1920x1080 pixels.
+   -cy.visit("https://rahulshettyacademy.com/AutomationPractice/")`: Visits the specified URL before each test.
+
+2. CheckBoxes Test (`it("CheckBoxes", ...) block):
+   -cy.get("#checkBoxOption1").check()`: Finds the checkbox with the id "checkBoxOption1" and checks it.
+   -.should("be.checked")`: Asserts that the checkbox is checked.
+   -.and("have.value", "option1")`: Asserts that the checkbox has the value "option1".
+   -cy.get("#checkBoxOption1").uncheck()`: Unchecks the checkbox with id "checkBoxOption1".
+   -.should("not.be.checked")`: Asserts that the checkbox is unchecked.
+   -cy.get("input[type='checkbox']").check("option1", "option2")`: Checks multiple checkboxes with values "option1" and "option2".
+
+3. Static DropDowns Test (`it("Static DropDowns", ...) block):
+   -cy.get("select").select("option1").and("have.value","option1")`: Selects the option with value "option1" from a dropdown and asserts that it has the correct value.
+   -cy.get("#dropdown-class-example").select("option1").and("have.value","option1")`: Similar to the above, but targeting a specific dropdown by its id.
+   - Subsequent lines follow the same pattern for selecting and asserting the values for different options in the dropdown.
+
+4. Dynamic DropDown Test (`it.only("Dynamic DropDown",...) block):
+   -cy.get("#autocomplete").type("Ind")`: Types "Ind" in an autocomplete input field.
+   -cy.get(".ui-menu-item div").each(($e1, index, $list) => {...}`: Iterates over each element with class "ui-menu-item" and a child div.
+   -if($e1.text()==="India")`: Checks if the text content of the current element is "India".
+   -cy.wrap($e1).click()`: If the condition is met, it wraps the element and clicks on it.
