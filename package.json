@@ -12,13 +12,16 @@
   "license": "ISC",
   "dependencies": {
     "@badeball/cypress-cucumber-preprocessor": "^20.0.1",
+    "convert-excel-to-json": "^1.7.0",
     "csvtojson": "^2.0.10",
-    "neat-csv": "5.1.0"
+    "neat-csv": "5.1.0",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@badeball/cypress-cucumber-preprocessor": "latest",
     "@cypress/browserify-preprocessor": "latest",
     "cypress": "^13.6.4",
-    "cypress-iframe": "^1.0.1"
+    "cypress-iframe": "^1.0.1",
+    "cypress-sql-server": "^1.0.0"
   }
 }
